@@ -1,13 +1,30 @@
 "use client";
 
 import { useGetImagesQuery } from "@/lib/services/imageApi";
-import { Box, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import Image from "next/image";
 import GaleryLoadingState from "./Galery-Loading-Skeleton";
 import { EditNote, FitScreen } from "@mui/icons-material";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
 
 function Gallery() {
   const { data, isLoading, error } = useGetImagesQuery();
+
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [open, setOpen] = useState(false);
+
+  console.log(selectedIndex);
+
+  const handleOpen = (index: number) => {
+    setOpen(true);
+    setSelectedIndex(index);
+  };
+  const handleClose = () => setOpen(false);
 
   if (isLoading) {
     return <GaleryLoadingState />;
@@ -23,10 +40,47 @@ function Gallery() {
 
   return (
     <Box>
+      <div>
+        <Modal
+          className=" justify-center flex items-center text-white bg-black bg-opacity-50"
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Swiper
+            modules={[Navigation, Pagination]}
+            initialSlide={selectedIndex} // Başlangıçta tıklanan fotoğraf
+            spaceBetween={0}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            className="max-w-[1100px] bg-slate-200  w-5/6   relative h-[600px] "
+          >
+            {data?.map((image) => (
+              <SwiperSlide key={image.id}>
+                <div className="bg-sky-950  w-full h-full p-[1px] ">
+                  <Image
+                    src={image.download_url}
+                    alt={image.author}
+                    width={1000}
+                    height={1000}
+                    className=" w-full h-full object-cover"
+                  />
+                </div>
+                <h2 className="text-center italic font-serif rounded-[20px_0_0_0] absolute bottom-0 right-0 px-2 mt-4 bg-sky-950  bg-opacity-70">
+                  Author: {image.author}
+                </h2>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Modal>
+      </div>
       {data && (
         <div className="py-4 md:py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
           {data.map((image, index) => (
             <div
+              onClick={() => handleOpen(index)}
               key={image.id}
               className={`w-full cursor-pointer overflow-hidden group relative h-60 ${
                 index % 5 === 0
