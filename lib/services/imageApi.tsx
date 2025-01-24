@@ -18,7 +18,10 @@ export const imageApi = createApi({
     getImages: builder.query<TImage[], void>({
       query: () => "v2/list",
     }),
+    getImage: builder.query<TImage, number>({
+      query: (id) => `id/${id}/info`,
+    }),
   }),
 });
 
-export const { useGetImagesQuery } = imageApi;
+export const { useGetImagesQuery, useGetImageQuery } = imageApi;

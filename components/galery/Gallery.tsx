@@ -43,9 +43,9 @@ function Gallery() {
                 height={700}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute z-20 inset-x-0  right-0 translate-y-10 group-hover:translate-y-0 bottom-0 bg-sky-900 opacity-80 text-white flex duration-300  space-x-2 px-1">
+              <div className="absolute z-20 inset-x-0  right-0 xl:translate-y-10 group-hover:translate-y-0 bottom-0 bg-sky-900 opacity-80 text-white flex duration-300  space-x-2 px-1">
                 <EditNote />
-                <p className="translate-x-20 opacity-0 transition-all duration-1000 group-hover:opacity-100 group-hover:translate-x-0">
+                <p className="xl:translate-x-20 xl:opacity-0 transition-all duration-1000 group-hover:opacity-100 group-hover:translate-x-0">
                   {image.author}
                 </p>
               </div>
