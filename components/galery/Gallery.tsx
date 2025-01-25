@@ -66,13 +66,13 @@ function Gallery() {
           >
             {data?.map((image) => (
               <SwiperSlide key={image.id}>
-                {/* <IconButton
+                <IconButton
                   onClick={handleClose}
                   color="primary"
                   className="!absolute !right-1 !top-1 !z-20 "
                 >
                   <CloseOutlined />
-                </IconButton> */}
+                </IconButton>
                 <div className="bg-sky-950  w-full h-full p-[1px] ">
                   <Image
                     src={image.download_url}
