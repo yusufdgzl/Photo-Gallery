@@ -69,7 +69,7 @@ function Gallery() {
                 <IconButton
                   onClick={handleClose}
                   color="primary"
-                  className="absolute right-1 top-1 z-20"
+                  className="!absolute !right-1 !top-1 !z-20 "
                 >
                   <CloseOutlined />
                 </IconButton>
