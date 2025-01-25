@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetImagesQuery } from "@/lib/services/imageApi";
-import { Box, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import Image from "next/image";
 import GaleryLoadingState from "./Galery-Loading-Skeleton";
 import { CloseOutlined, EditNote, FitScreen } from "@mui/icons-material";
@@ -66,13 +66,12 @@ function Gallery() {
           >
             {data?.map((image) => (
               <SwiperSlide key={image.id}>
-                <IconButton
+                <button
                   onClick={handleClose}
-                  color="primary"
-                  className="!absolute !right-1 !top-1 !z-20 "
+                  className="absolute group right-1 top-1 z-20 border-sky-900 border-opacity-60 hover:bg-white border rounded-full"
                 >
-                  <CloseOutlined />
-                </IconButton>
+                  <CloseOutlined className="fill-sky-600" />
+                </button>
                 <div className="bg-sky-950  w-full h-full p-[1px] ">
                   <Image
                     src={image.download_url}
