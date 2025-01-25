@@ -68,9 +68,9 @@ function Gallery() {
               <SwiperSlide key={image.id}>
                 <button
                   onClick={handleClose}
-                  className="absolute group right-1 top-1 z-20 border-sky-900 border-opacity-60 hover:bg-white border rounded-full"
+                  className="absolute group right-1 top-1 z-20 border-sky-900 border-opacity-60 hover:bg-sky-900 border rounded-full"
                 >
-                  <CloseOutlined className="fill-sky-600" />
+                  <CloseOutlined />
                 </button>
                 <div className="bg-sky-950  w-full h-full p-[1px] ">
                   <Image
