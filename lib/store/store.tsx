@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
 import { imageApi } from "../services/imageApi";
-import viewUsersSliceReducer from "../features/view-user/wievUsersSlice";
+import openModalSliceReducer from "../features/modal/modalSlice";
 
 export const store = configureStore({
   reducer: {
     [imageApi.reducerPath]: imageApi.reducer,
-    showUsers: viewUsersSliceReducer,
+    openModal: openModalSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(imageApi.middleware),

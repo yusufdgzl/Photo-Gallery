@@ -1,30 +1,32 @@
 "use client";
 
 import { useGetImagesQuery } from "@/lib/services/imageApi";
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
 import Image from "next/image";
 import GaleryLoadingState from "./Galery-Loading-Skeleton";
-import { EditNote, FitScreen } from "@mui/icons-material";
+import { CloseOutlined, EditNote, FitScreen } from "@mui/icons-material";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { toggleModal } from "@/lib/features/modal/modalSlice";
 
 function Gallery() {
   const { data, isLoading, error } = useGetImagesQuery();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [open, setOpen] = useState(false);
 
-  console.log(selectedIndex);
+  const modalIsOpen = useAppSelector((state) => state.openModal.modalIsOpen);
+  const dispatch = useAppDispatch();
 
   const handleOpen = (index: number) => {
-    setOpen(true);
+    dispatch(toggleModal());
     setSelectedIndex(index);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => dispatch(toggleModal());
 
   if (isLoading) {
     return <GaleryLoadingState />;
@@ -43,7 +45,7 @@ function Gallery() {
       <div>
         <Modal
           className=" justify-center flex items-center text-white bg-black bg-opacity-50"
-          open={open}
+          open={modalIsOpen}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
@@ -55,10 +57,17 @@ function Gallery() {
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            className="max-w-[1100px] bg-slate-200  w-5/6   relative h-[600px] "
+            className="max-w-[1100px] bg-slate-200 w-5/6   relative h-[600px] "
           >
             {data?.map((image) => (
               <SwiperSlide key={image.id}>
+                <IconButton
+                  onClick={handleClose}
+                  color="primary"
+                  className="absolute right-1 top-1 z-20"
+                >
+                  <CloseOutlined />
+                </IconButton>
                 <div className="bg-sky-950  w-full h-full p-[1px] ">
                   <Image
                     src={image.download_url}
