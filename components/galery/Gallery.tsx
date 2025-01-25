@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { toggleModal } from "@/lib/features/modal/modalSlice";
 
@@ -51,13 +51,18 @@ function Gallery() {
           aria-describedby="modal-modal-description"
         >
           <Swiper
-            modules={[Navigation, Pagination]}
-            initialSlide={selectedIndex} // Başlangıçta tıklanan fotoğraf
+            modules={[Navigation, Pagination, Autoplay]}
+            initialSlide={selectedIndex}
             spaceBetween={0}
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            className="max-w-[1100px] bg-slate-200 w-5/6   relative h-[600px] "
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            className="max-w-[1100px] bg-slate-200 w-5/6 cursor-pointer  relative h-[600px] "
           >
             {data?.map((image) => (
               <SwiperSlide key={image.id}>
